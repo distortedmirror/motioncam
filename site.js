@@ -22,6 +22,18 @@ function capture(payload) {
 	if(sc>=numThreshold.value){
 	        var img = document.createElement("img");
        		img.src = payload.getURL();
+		function formatAMPM(date) { // This is to display 12 hour format like you asked
+		  var hours = date.getHours();
+		  var minutes = date.getMinutes();
+		  var ampm = hours >= 12 ? 'pm' : 'am';
+		  hours = hours % 12;
+		  hours = hours ? hours : 12; // the hour '0' should be '12'
+		  minutes = minutes < 10 ? '0'+minutes : minutes;
+		  var strTime = hours + ':' + minutes + ' ' + ampm;
+		  return strTime;
+		}
+		var myDate = Date.now();
+		var displayDate = myDate.getMonth()+ '/' +myDate.getDate()+ '/' +myDate.getFullYear()+ ' ' +formatAMPM(myDate);
 		img.setAttribute('style','margin:2px;position:relative;height:45%;width:auto;');
 		rangeCap.setAttribute('onchange','videoImage.src=divCapture.children[this.value].src;videoImage.style.display="block";setTimeout(function(){videoImage.style.display="none";},3000);');
 		img.setAttribute('onclick','videoImage.src=this.src;videoImage.style.display="block";setTimeout(function(){videoImage.style.display="none";},3000);');
