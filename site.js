@@ -27,6 +27,7 @@ function capture(payload) {
 		img.setAttribute('onclick','videoImage.src=this.src;videoImage.style.display="block";setTimeout(function(){videoImage.style.display="none";},3000);');
 		divCapture.append(img);
 		capCount++;
+		document.getElementById('divCount').innerHTML=capCount;
 		rangeCap.setAttribute('max',capCount);
 		rangeCap.setAttribute('value',capCount);
 	}
