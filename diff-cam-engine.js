@@ -95,6 +95,8 @@ var DiffCamEngine = (function() {
 
 	function initSuccess(requestedStream) {
 		stream = requestedStream;
+		video.srcObject = stream;//TESTING
+		video.play(); //TESTING
 		initSuccessCallback();
 	}
 
