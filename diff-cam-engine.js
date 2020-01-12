@@ -77,7 +77,7 @@ var DiffCamEngine = (function() {
 	}
 
 	function requestWebcam() {
-		var vidcon={ video:{facingMode:{exact:"environment"}}};
+		var vidcon={audio:false, video:{width:captureWidth,height:captureHeight,facingMode:{exact:"environment"}}};
 		var chkCamera=document.getElementById('chkCamera'); 
 		if(chkCamera.checked){
 			vidcon = {
@@ -86,9 +86,11 @@ var DiffCamEngine = (function() {
 			};
 		}
 		var constraints=vidcon;
+		if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 		navigator.mediaDevices.getUserMedia(constraints)
 			.then(initSuccess)
 			.catch(initError);
+		}
 	}
 
 	function initSuccess(requestedStream) {
@@ -109,6 +111,7 @@ var DiffCamEngine = (function() {
 		// streaming takes a moment to start
 		video.addEventListener('canplay', startComplete);
 		video.srcObject = stream;
+		video.play(); //TESTING
 	}
 
 	function startComplete() {
