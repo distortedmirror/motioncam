@@ -14,6 +14,7 @@ function initSuccess() {
 }
 
 function initError() {
+	debugger;
 	alert('Something went wrong.');
 }
 
