@@ -77,7 +77,7 @@ var DiffCamEngine = (function() {
 	}
 
 	function requestWebcam() {
-		var vidcon={audio:false, video:{width:captureWidth,height:captureHeight,facingMode:{exact:"environment"}}};
+		var vidcon={audio:false, video:{facingMode:"environment"}};
 		var chkCamera=document.getElementById('chkCamera'); 
 		if(chkCamera.checked){
 			vidcon = {
