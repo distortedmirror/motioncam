@@ -23,7 +23,7 @@ function capture(payload) {
 	        var img = document.createElement("img");
        		img.src = payload.getURL();
 		img.setAttribute('style','margin:2px;position:relative;height:45%;width:auto;');
-		rangeCap.setAttribute('onchange','videoImage.src=divCapture.getElementsByTagId("img")[this.value].src;videoImage.style.display="block";setTimeout(function(){videoImage.style.display="none";},3000);');
+		rangeCap.setAttribute('onchange','videoImage.src=divCapture.children[this.value].src;videoImage.style.display="block";setTimeout(function(){videoImage.style.display="none";},3000);');
 		img.setAttribute('onclick','videoImage.src=this.src;videoImage.style.display="block";setTimeout(function(){videoImage.style.display="none";},3000);');
 		divCapture.append(img);
 		capCount++;
