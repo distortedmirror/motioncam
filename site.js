@@ -36,7 +36,7 @@ function capture(payload) {
 		var displayDate = myDate.getMonth()+ '/' +myDate.getDate()+ '/' +myDate.getFullYear()+ ' ' +formatAMPM(myDate);
 		img.setAttribute('title',displayDate);
 		img.setAttribute('style','margin:2px;position:relative;height:45%;width:auto;');
-		rangeCap.setAttribute('oninput','videoImage.src=divCapture.children[this.value].src;videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;border:4px gold groove;");videoImage.setAttribute('onclick','this.style.display="none";'););
+		rangeCap.setAttribute('oninput','videoImage.src=divCapture.children[this.value].src;videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;border:4px gold groove;");videoImage.setAttribute("onclick","this.style.display=\"none\";");');
 		img.setAttribute('onclick','videoImage.src=this.src;
 			videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;border:4px gold groove;");videoImage.setAttribute('onclick','this.style.display="none";'););
 		divCapture.append(img);
