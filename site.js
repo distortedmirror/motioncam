@@ -32,7 +32,7 @@ function capture(payload) {
 		  hours = hours ? hours : 12; // the hour '0' should be '12'
 		  minutes = minutes < 10 ? '0'+minutes : minutes;
 		  var secs=date.getSeconds();
-		  var strTime = hours + ':' + minutes + ' '+secs+' '+ ampm;
+		  var strTime = hours + ':' + minutes + ':'+(secs<10?'0':'')+secs+' '+ ampm;
 		  return strTime;
 		}
 		var myDate = new Date(Date.now());
