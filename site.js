@@ -34,6 +34,7 @@ function capture(payload) {
 		}
 		var myDate = Date.now();
 		var displayDate = myDate.getMonth()+ '/' +myDate.getDate()+ '/' +myDate.getFullYear()+ ' ' +formatAMPM(myDate);
+		img.setAttribute('alt',displayDate);
 		img.setAttribute('style','margin:2px;position:relative;height:45%;width:auto;');
 		rangeCap.setAttribute('onchange','videoImage.src=divCapture.children[this.value].src;videoImage.style.display="block";setTimeout(function(){videoImage.style.display="none";},3000);');
 		img.setAttribute('onclick','videoImage.src=this.src;videoImage.style.display="block";setTimeout(function(){videoImage.style.display="none";},3000);');
