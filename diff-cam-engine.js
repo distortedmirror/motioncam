@@ -269,6 +269,7 @@ var DiffCamEngine = (function() {
 		// public functions
 		init: init,
 		start: start,
-		stop: stop
+		stop: stop,
+		requestWebcam: requestWebcam
 	};
 })();
