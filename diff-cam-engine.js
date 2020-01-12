@@ -77,11 +77,14 @@ var DiffCamEngine = (function() {
 	}
 
 	function requestWebcam() {
-		var constraints = {
-			audio: false,
-			video: { width: captureWidth, height: captureHeight }
-		};
-
+		var vidcon={ video:{facingMode:{exact:"environment"}}};
+		var chkCamera=document.getElementById('chkCamera'); 
+		if(chkCamera.checked){
+			vidcon = {
+				audio: false,
+				video: { width: captureWidth, height: captureHeight }
+			};
+		}
 		navigator.mediaDevices.getUserMedia(constraints)
 			.then(initSuccess)
 			.catch(initError);
