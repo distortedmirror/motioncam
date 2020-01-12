@@ -24,14 +24,14 @@ canvas {
 		<div style="justify-content:center;display:flex">		
 			<div id="divCount" style="position:fixed;left:0px;top:0px;width:85px;font-size:50px;color:gold;z-index:40;">0</div>
 			<img style="display:none;position:fixed;top:0px;height:80%;z-index:100;" id="videoImage"/>
-			<div style="font-size:35px;display:none;position:fixed;top:1%;right:1%;z-index:104;pointer-events:none;" id="videoImageX">X</div>
+			<div style="color:gold;font-size:28px;display:none;position:fixed;top:1%;right:1%;z-index:104;pointer-events:none;" id="videoImageX">X</div>
 			<div style="pointer-events:none;font-size:30px;display:none;position:fixed;top:10px;text-align:center;left:0px;width:100%;z-index:105;" id="videoImageTimestamp"></div>
 			<video style="position:fixed;top:0px;height:80%;" id="video"></video>
 		</div>		
 			<canvas id="motion" style="position:fixed;top:0px;right:0px;width:85px;"></canvas>
 			
 			<span id="score" style="position:fixed;top:0px;right:0px;font-size:50px;color:gold;">0</span>
-			<input id="numberThreshold" style="background-color:transparent;position:fixed;bottom:20%;width:85px;right:0px;font-size:50px;color:gold;z-index:10;" type="number" value="22" size="4"/>
+			<input id="numberThreshold" style="background-color:transparent;position:fixed;bottom:20%;width:85px;right:0px;font-size:50px;color:gold;z-index:10;" type="number" value="35" size="4"/>
 			<div style="font-size:50px;color:gold;position:fixed;bottom:20%;left:0px;width:85px;z-index:10;"><input id="chkCamera" type="checkbox" checked="checked" onchange="setTimeout(function(){DiffCamEngine.requestWebcam();},0);"/>F/B</div>
 			<input id="rangeCapture" min="0" max="0" value="0" type="range" style="position:fixed;top:82%;left:1%;width:98%;"/>	
 			<div id="divCapture" style="position:fixed;bottom:1%;height:10%;left:1%;width:98%;overflow:scroll;">
