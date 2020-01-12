@@ -32,7 +32,7 @@ function capture(payload) {
 		  var strTime = hours + ':' + minutes + ' ' + ampm;
 		  return strTime;
 		}
-		var myDate = Date.now();
+		var myDate = new Date(Date.now());
 		var displayDate = myDate.getMonth()+ '/' +myDate.getDate()+ '/' +myDate.getFullYear()+ ' ' +formatAMPM(myDate);
 		img.setAttribute('alt',displayDate);
 		img.setAttribute('style','margin:2px;position:relative;height:45%;width:auto;');
