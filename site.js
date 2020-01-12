@@ -19,7 +19,7 @@ function capture(payload) {
 
 	var sc = payload.score;
 	score.textContent = payload.score;
-	if(sc>=numThreshold){
+	if(sc>=numThreshold.value){
 	        var img = document.createElement("img");
        		img.src = payload.getURL();
 		img.setAttribute('style','margin:2px;position:relative;height:100%;width:auto;');
