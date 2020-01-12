@@ -11,7 +11,15 @@ function initError() {
 }
 
 function capture(payload) {
+	var divCapture = document.getElementById('divCapture');
+	var sc = payload.score;
 	score.textContent = payload.score;
+	if(sc>=30){
+        var img = document.createElement("img");
+        img.src = payload.getURL();
+	img.setAttribute('style','position:relative;height:100%;width:auto;');
+        divCapture.append(img);
+	}
 }
 
 DiffCamEngine.init({
