@@ -2,6 +2,8 @@ var video = document.getElementById('video');
 var canvas = document.getElementById('motion');
 var score = document.getElementById('score');
 var videoImage=document.getElementById('videoImage');
+var videoImageTimestamp=document.getElementById('videoImageTimestamp');
+var videoImageX=document.getElementById('videoImageX');
 var rangeCap=document.getElementById('rangeCapture');
 var divCapture = document.getElementById('divCapture');
 var numThreshold= document.getElementById('numberThreshold');
@@ -29,11 +31,13 @@ function capture(payload) {
 		  hours = hours % 12;
 		  hours = hours ? hours : 12; // the hour '0' should be '12'
 		  minutes = minutes < 10 ? '0'+minutes : minutes;
-		  var strTime = hours + ':' + minutes + ' ' + ampm;
+		  var secs=date.getSeconds();
+		  var strTime = hours + ':' + minutes + ' '+secs+' '+ ampm;
 		  return strTime;
 		}
 		var myDate = new Date(Date.now());
 		var displayDate = myDate.getMonth()+ '/' +myDate.getDate()+ '/' +myDate.getFullYear()+ ' ' +formatAMPM(myDate);
+		videoImageTimestamp.innerHTML=displayDate;
 		img.setAttribute('title',displayDate);
 		img.setAttribute('style','margin:2px;position:relative;height:45%;width:auto;');
 		rangeCap.setAttribute('oninput','videoImageX.style.display="block";videoImageTimestamp.style.display="block";videoImage.src=divCapture.children[this.value].src;videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;margin:5px;border:4px gold outset;");videoImage.setAttribute("onclick","videoImageX.style.display=\\\"none\\\";videoImageTimestamp.style.display=\\\"none\\\";this.style.display=\\\"none\\\";");');
