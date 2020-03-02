@@ -17,50 +17,14 @@ function initError() {
 	debugger;
 	alert('Something went wrong.');
 }
-function resize_image( src, dst, type, quality ) {
-     var tmp = new Image(),
-         canvas, context, cW, cH;
 
-     type = type || 'image/jpeg';
-     quality = quality || 0.92;
-
-     cW = src.naturalWidth;
-     cH = src.naturalHeight;
-
-     tmp.src = src.src;
-     tmp.onload = function() {
-
-        canvas = document.createElement( 'canvas' );
-
-        cW /= 8;
-        cH /= 8;
-
-        if ( cW < src.width ) cW = src.width;
-        if ( cH < src.height ) cH = src.height;
-
-        canvas.width = cW;
-        canvas.height = cH;
-        context = canvas.getContext( '2d' );
-        context.drawImage( tmp, 0, 0, cW, cH );
-
-        dst.src = canvas.toDataURL( type, quality );
-
-        if ( cW <= src.width || cH <= src.height )
-           return;
-
-        tmp.src = dst.src;
-     }
-
-  }
 function capture(payload) {
 
 	var sc = payload.score;
 	score.textContent = payload.score;
 	if(sc>=numThreshold.value){
 	        var img = document.createElement("img");
-       		var img2 = document.createElement("img");
-        img2.src=payload.getURL();
-        resize_image(img2,img);
+       		img.src = payload.getURL();
 		function formatAMPM(date) { // This is to display 12 hour format like you asked
 		  var hours = date.getHours();
 		  var minutes = date.getMinutes();
