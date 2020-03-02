@@ -95,4 +95,5 @@ DiffCamEngine.init({
 	motionCanvas: canvas,
 	initSuccessCallback: initSuccess,
 	initErrorCallback: initError,
-	captureCallback: 
+	captureCallback: capture
+});
