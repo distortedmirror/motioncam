@@ -17,49 +17,50 @@ function initError() {
 	debugger;
 	alert('Something went wrong.');
 }
-function thumbnail(base64, maxWidth, maxHeight) {
+function resize_image( src, dst, type, quality ) {
+     var tmp = new Image(),
+         canvas, context, cW, cH;
 
-  // Max size for thumbnail
-  if(typeof(maxWidth) === 'undefined') var maxWidth = 500;
-  if(typeof(maxHeight) === 'undefined') var maxHeight = 500;
+     type = type || 'image/jpeg';
+     quality = quality || 0.92;
 
-  // Create and initialize two canvas
-  var canvas = document.createElement("canvas");
-  var ctx = canvas.getContext("2d");
-  var canvasCopy = document.createElement("canvas");
-  var copyContext = canvasCopy.getContext("2d");
+     cW = src.naturalWidth;
+     cH = src.naturalHeight;
 
-  // Create original image
-  var img = new Image();
-  img.src = base64;
+     tmp.src = src.src;
+     tmp.onload = function() {
 
-  // Determine new ratio based on max size
-  var ratio = 1;
-  if(img.width > maxWidth)
-    ratio = maxWidth / img.width;
-  else if(img.height > maxHeight)
-    ratio = maxHeight / img.height;
+        canvas = document.createElement( 'canvas' );
 
-  // Draw original image in second canvas
-  canvasCopy.width = img.width;
-  canvasCopy.height = img.height;
-  copyContext.drawImage(img, 0, 0);
+        cW /= 8;
+        cH /= 8;
 
-  // Copy and resize second canvas to first canvas
-  canvas.width = img.width * ratio;
-  canvas.height = img.height * ratio;
-  ctx.drawImage(canvasCopy, 0, 0, canvasCopy.width, canvasCopy.height, 0, 0, canvas.width, canvas.height);
+        if ( cW < src.width ) cW = src.width;
+        if ( cH < src.height ) cH = src.height;
 
-  return canvas.toDataURL();
+        canvas.width = cW;
+        canvas.height = cH;
+        context = canvas.getContext( '2d' );
+        context.drawImage( tmp, 0, 0, cW, cH );
 
-}
+        dst.src = canvas.toDataURL( type, quality );
+
+        if ( cW <= src.width || cH <= src.height )
+           return;
+
+        tmp.src = dst.src;
+     }
+
+  }
 function capture(payload) {
 
 	var sc = payload.score;
 	score.textContent = payload.score;
 	if(sc>=numThreshold.value){
 	        var img = document.createElement("img");
-       		img.src =thumbnail( payload.getURL(),86,72);
+       		var img2 = document.createElement("img");
+        img2.src=payload.getURL();
+        resize_image(img2,img);
 		function formatAMPM(date) { // This is to display 12 hour format like you asked
 		  var hours = date.getHours();
 		  var minutes = date.getMinutes();
