@@ -130,7 +130,7 @@ var DiffCamEngine = (function() {
 	function requestWebcam() {
 		var chkCamera=document.getElementById('chkCamera');
 		var mode=chkCamera.checked?"environment":"user";
-		var vidcon={audio:false, video:{facingMode:mode}};
+		var vidcon={audio:false, video:{facingMode:{"exact":mode}}};
 		var chkCamera=document.getElementById('chkCamera'); 
 		if(chkCamera.checked){
 			vidcon = {
