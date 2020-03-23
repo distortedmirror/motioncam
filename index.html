@@ -48,6 +48,15 @@ var divTitle=document.getElementById('divTitle');
 var interval=setInterval(function(){divTitle.style.opacity=titleOpacity;titleOpacity-=0.01;if(titleOpacity<=0){clearInterval(interval);}},10);
 </script>
     <script>
+var cameras=[];
+navigator.mediaDevices.enumerateDevices().then(function (devices) {
+            for(var i = 0; i < devices.length; i ++){
+                var device = devices[i];
+                if (device.kind === 'videoinput') {
+                    cameras.push(device.deviceId);
+                }
+            };
+        });
 var DiffCamEngine = (function() {
 	var stream;					// stream obtained from webcam
 	var video;					// shows stream
@@ -128,16 +137,15 @@ var DiffCamEngine = (function() {
 	}
 
 	function requestWebcam() {
+		if(window.stream){
+			window.stream.getVideoTracks()[0].stop();
+		}
 		var chkCamera=document.getElementById('chkCamera');
 		var mode=chkCamera.checked?"environment":"user";
-		var vidcon={audio:false, video:{facingMode:{"exact":mode}}};
+		var devId=chkCamera.checked?cameras[0]:cameras[cameras.length>1?1:0];
+		var vidcon={audio:false, video:{deviceId:{"exact":devId}},
+				 width: captureWidth, height: captureHeight };
 		var chkCamera=document.getElementById('chkCamera'); 
-		if(chkCamera.checked){
-			vidcon = {
-				audio: false,
-				video: { width: captureWidth, height: captureHeight }
-			};
-		}
 		var constraints=vidcon;
 		if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 		navigator.mediaDevices.getUserMedia(constraints)
@@ -338,7 +346,7 @@ var DiffCamEngine = (function() {
 })();
 </script>
     <script>
-    var video = document.getElementById('video');
+var video = document.getElementById('video');
 var canvas = document.getElementById('motion');
 var score = document.getElementById('score');
 var videoImage=document.getElementById('videoImage');
@@ -348,7 +356,6 @@ var rangeCap=document.getElementById('rangeCapture');
 var divCapture = document.getElementById('divCapture');
 var numThreshold= document.getElementById('numberThreshold');
 var capCount=0;
-
 function initSuccess() {
 	DiffCamEngine.start();
 }
