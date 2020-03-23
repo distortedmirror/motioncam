@@ -3,7 +3,6 @@ export DISPLAY=:0
  urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
 read input
 export input
-#echo $input >> login.out
 export uri="`perl -e '$_=$ENV{\"input\"};@get=split(/ /);$_=$get[1];@urlqs=split(/[\?]/);$url=$urlqs[0];print $url;'`"
 perl -e 'print "HTTP/1.1 200 OK\r\n"'
 if [ "$uri" = "/" ];
