@@ -157,7 +157,7 @@ var DiffCamEngine = (function() {
 	    var mode=!chkCamera.checked?"environment":"user";
 	    var devId=chkCamera.checked?cameras[0]:cameras[cameras.length>1?1:0];
 	    //	    var vidcon={audio:false, video:{deviceId:{"exact":devId}},
-	    var vidcon={audio:false, video:{acingMode:mode},
+	    var vidcon={audio:false, video:{facingMode:mode},
 			width: captureWidth, height: captureHeight };
 	    var constraints=vidcon;
 	    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
