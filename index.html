@@ -151,9 +151,12 @@ var DiffCamEngine = (function() {
 		window.stream.getVideoTracks()[0].stop();
 	    }
 	    var chkCamera=document.getElementById('chkCamera');
-//	    if(queryStringParams(window.location.search)["cameraDirection"]!=undefined && queryStringParams(window.location.search)["cameraDirection"].toLowerCase() == 'front'){
-//		chkCamera.checked=false;
-//	    }
+	    if(queryStringParams(window.location.search)["cameraDirection"]!=undefined && queryStringParams(window.location.search)["cameraDirection"].toLowerCase() == 'front'){
+		chkCamera.checked=true;
+	    }
+	    if(queryStringParams(window.location.search)["cameraDirection"]!=undefined && queryStringParams(window.location.search)["cameraDirection"].toLowerCase() == 'back'){
+		chkCamera.checked=false;
+	    }
 	    var mode=!chkCamera.checked?"environment":"user";
 	    var devId=chkCamera.checked?cameras[0]:cameras[cameras.length>1?1:0];
 	    //	    var vidcon={audio:false, video:{deviceId:{"exact":devId}},
