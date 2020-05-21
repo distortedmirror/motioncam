@@ -154,13 +154,11 @@ var DiffCamEngine = (function() {
 //	    if(queryStringParams(window.location.search)["cameraDirection"]!=undefined && queryStringParams(window.location.search)["cameraDirection"].toLowerCase() == 'front'){
 //		chkCamera.checked=false;
 //	    }
-	    var mode=chkCamera.checked?"environment":"user";
+	    var mode=!chkCamera.checked?"environment":"user";
 	    var devId=chkCamera.checked?cameras[0]:cameras[cameras.length>1?1:0];
 	    //	    var vidcon={audio:false, video:{deviceId:{"exact":devId}},
-	    var vidcon={audio:false, video:{
-		facingMode:( !chkCamera.checked?"environment":"user")},
+	    var vidcon={audio:false, video:{acingMode:mode},
 			width: captureWidth, height: captureHeight };
-	    var chkCamera=document.getElementById('chkCamera'); 
 	    var constraints=vidcon;
 	    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 		navigator.mediaDevices.getUserMedia(constraints)
@@ -172,7 +170,7 @@ var DiffCamEngine = (function() {
 	function initSuccess(requestedStream) {
 		stream = requestedStream;
 		video.srcObject = stream;//TESTING
-		video.play(); //TESTING
+//		video.play(); //TESTING
 		initSuccessCallback();
 	}
 
