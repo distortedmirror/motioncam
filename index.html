@@ -194,10 +194,22 @@ var DiffCamEngine = (function() {
 	}
     
 	function initSuccess(requestedStream) {
-		stream = requestedStream;
-		video.srcObject = stream;//TESTING
-//		video.play(); //TESTING
-		initSuccessCallback();
+	    stream = requestedStream;
+	    video.srcObject = stream;//TESTING
+	    //		video.play(); //TESTING
+	    const track = stream.getVideoTracks()[0];
+	    //Create image capture object and get camera capabilities
+	    const imageCapture = new ImageCapture(track)
+	    const photoCapabilities = imageCapture.getPhotoCapabilities().then(() => {
+		try{
+		    if(queryStringParams(window.location.search)["torch"]!=undefined && queryStringParams(window.location.search)["torch"].toLowerCase() == 'on'){
+			track.applyConstraints({
+			    advanced: [{torch: true}]
+			});
+		    }
+		}catch(e){;}
+            });	    
+	    initSuccessCallback();
 	}
 
 	function initError(error) {
