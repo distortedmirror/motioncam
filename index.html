@@ -109,10 +109,10 @@ var DiffCamEngine = (function() {
 	    var clearPrev=false;
 	    if(queryStringParams(window.location.search)["clear"]!=undefined) {
 		var qsClear=queryStringParams(window.location.search)["clear"];
-		if(qsClear.toUpperCase()=='TRUE'){
-		    clearprev=true;
+		if(qsClear=='true'){
+		    clearPrev=true;
 		} else {
-		    clearprev=false;
+		    clearPrev=false;
 		}
 	    } else {
 		clearPrev=confirm("Clear Previous Recording?")
