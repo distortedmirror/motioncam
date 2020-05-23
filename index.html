@@ -109,7 +109,7 @@ var DiffCamEngine = (function() {
 	    var clearPrev=false;
 	    if(queryStringParams(window.location.search)["clear"]!=undefined) {
 		var qsClear=queryStringParams(window.location.search)["clear"];
-		if(qsClear.toUpperCase()=='YES'){
+		if(qsClear.toUpperCase()=='TRUE'){
 		    clearprev=true;
 		} else {
 		    clearprev=false;
