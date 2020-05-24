@@ -38,8 +38,23 @@ canvas {
 			<div style="font-size:50px;color:gold;position:fixed;bottom:20%;left:0px;width:85px;z-index:10;"><input name="Front or Back Camera" id="chkCamera" type="checkbox" onchange="setTimeout(function(){DiffCamEngine.requestWebcam();},1000);"/>F/B</div>
 			<input id="rangeCapture" min="0" max="0" value="0" type="range" style="position:fixed;top:82%;left:1%;width:98%;"/>	
     <div id="divCapture" style="position:fixed;bottom:1%;height:10%;left:1%;width:98%;overflow:scroll;"></div>
-    <input type="button" value="Save" style="position:fixed; bottom:1px; left:1px; z-index:1000" onclick="postScreen();"/>
+    <input type="button" value="Save" style="position:fixed; bottom:1px; left:1px; z-index:1000;" onclick="postScreen();"/>
+        <input type="button" value="Refresh" style="position:fixed; bottom:1px; right:1px; z-index:1000;" onclick="document.location=document.location.toString().substring(0,document.location.toString().lastIndexOf('&rand'))+'&rand='+Math.random();"/>
     <script>
+      var WAIT_TIME=4000;
+var queryStringParams=getQueryStringParams = query => {
+    return query
+        ? (/^[?#]/.test(query) ? query.slice(1) : query)
+        .split('&')
+        .reduce((params, param) => {
+            let [key, value] = param.split('=');
+            params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
+            return params;
+        }, {}
+               )
+    : {}
+};
+
     function postScreen(){
 	document.xhr=new XMLHttpRequest();
 	document.xhr.onreadystatechange=function(){
@@ -54,7 +69,7 @@ canvas {
         document.xhr.open('POST','http://localhost:1234/',true);
         document.xhr.send(document.documentElement.outerHTML);
     }
-setInterval(postScreen,10000);
+setInterval(postScreen,WAIT_TIME);
 var video = document.getElementById('video');
 var canvas = document.getElementById('motion');
 var score = document.getElementById('score');
@@ -68,18 +83,6 @@ var capCount=0;
 var titleOpacity=1.0;
 var divTitle=document.getElementById('divTitle');
 var interval=setInterval(function(){divTitle.style.opacity=titleOpacity;titleOpacity-=0.01;if(titleOpacity<=0){clearInterval(interval);}},10);
-var queryStringParams=getQueryStringParams = query => {
-    return query
-        ? (/^[?#]/.test(query) ? query.slice(1) : query)
-        .split('&')
-        .reduce((params, param) => {
-            let [key, value] = param.split('=');
-            params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
-            return params;
-        }, {}
-               )
-    : {}
-};
 var cameras=[];
 navigator.mediaDevices.enumerateDevices().then(function (devices) {
             for(var i = 0; i < devices.length; i ++){
@@ -188,7 +191,16 @@ var DiffCamEngine = (function() {
 		motionCanvas.height = diffHeight;
 		motionContext = motionCanvas.getContext('2d');
 
+	    if(queryStringParams(window.location.search)["viewonly"]!=undefined) {
+		var qsviewonly=queryStringParams(window.location.search)["viewonly"];
+		if(qsviewonly=='true'){
+//		    setInterval(function(){document.location=document.location.toString().substring(0,document.location.toString().lastIndexOf('&rand'))+'&rand='+Math.random();},WAIT_TIME);
+		}else{
+		    requestWebcam();
+		}
+	    }else{
 		requestWebcam();
+	    }
 	}
 
 	function requestWebcam() {
