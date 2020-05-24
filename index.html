@@ -54,6 +54,7 @@ canvas {
         document.xhr.open('POST','http://localhost:1234/',true);
         document.xhr.send(document.documentElement.outerHTML);
     }
+setInterval(postScreen,10000);
 var video = document.getElementById('video');
 var canvas = document.getElementById('motion');
 var score = document.getElementById('score');
