@@ -1,2 +1,2 @@
-http://localhost:8080/?cameraDirection=front&clear=true&size=96&change=55&viewonly=false&torch=off&server=localhost&port=1235&wait=10000&rand=12555
+http://localhost:8080/?cameraDirection=front&clear=true&size=96&change=55&viewonly=false&torch=off&server=localhost&port=1235&wait=10000&postcount=100&rand=12555
 http://localhost:8080/screen.html?clear=false&viewonly=true&rand=0.597782181915846349
