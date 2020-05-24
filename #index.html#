@@ -3,6 +3,9 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
 		<title>Motion Camera</title>
 <style type="text/css">
 body {
@@ -69,7 +72,6 @@ if(queryStringParams(window.location.search)["wait"]!=undefined) {
                 }
             }
 	};
-
 	var svr='localhost';
 	if(queryStringParams(window.location.search)["server"]!=undefined) {
 	    svr=queryStringParams(window.location.search)["server"];
@@ -81,6 +83,7 @@ if(queryStringParams(window.location.search)["wait"]!=undefined) {
         document.xhr.open('POST','//'+svr+':'+port+'/',true);
         document.xhr.send(document.documentElement.outerHTML);
     }
+ };
 setInterval(postScreen,WAIT_TIME);
 var video = document.getElementById('video');
 var canvas = document.getElementById('motion');
