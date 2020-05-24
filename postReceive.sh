@@ -12,7 +12,7 @@ echo '<select id="selectScreen" onchange="var v=this.options[this.selectedIndex]
 for i in `ls ./screens/*.html 2> /dev/null |sort`; do 
 export DATETIME=`echo $i|perl -pe 's/\.\/screens\/_(..)_(..)_(..)_(..)_(..)_(..).html/$1\/$2\/20$3 $4:$5:$6/g;'`
 export TIME=`echo $i|perl -pe 's/\.\/screens\/(..)_(..)_(..)_(..)_(..)_(..)_screen.html/$4:$5:$6/g;'`
-echo "<option value=\"`echo $i|perl -pe 's/..screens//ig;'`?clear=false&viewonly=true\" title=\"$DATETIME\">$DATETIME</option>" >>screens.html
+echo "<option value=\"`echo $i|perl -pe 's/..screens//ig;'`?clear=false&viewonly=true\" title=\"$DATETIME\">`echo $DATETIME|sed -e 's/.screens.//g'`</option>" >>screens.html
 done 
 echo '</select>' >> screens.html
 for i in `find screens/ -size 0`; do rm -f $i 2> /dev/null; done

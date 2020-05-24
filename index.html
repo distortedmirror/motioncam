@@ -3,9 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="cache-control" content="max-age=0" />
-<meta http-equiv="cache-control" content="no-cache" />
-<meta http-equiv="expires" content="0" />
+<meta http-equiv="expires" content="-1" />
 <meta http-equiv="pragma" content="no-cache" />
 		<title>Motion Camera</title>
 <style type="text/css">
@@ -525,12 +523,14 @@ function capture(payload) {
 	if(capCount>=POST_CAP_COUNT){
 setTimeout(function(){
 	    postScreen();
+setTimeout(function(){
 	    capCount=0;
 	    document.getElementById('divCount').innerHTML=capCount;
 	    rangeCap.setAttribute('max',capCount-1);
 	    rangeCap.setAttribute('value',capCount-1);
 	    divCapture.innerHTML='';
 	    localStorage.clear();
+},0);
 },0);
 	}
     }
