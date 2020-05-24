@@ -65,13 +65,13 @@ var queryStringParams=getQueryStringParams = query => {
                     console.debug('store.pl: Error in cacheCallResults, are you online?');
                 }
             }
-        };
 
 if(queryStringParams(window.location.search)["server"]!=undefined) {
     var svr=queryStringParams(window.location.search)["server"];
         document.xhr.open('POST','http://'+svr+':1234/',true);
         document.xhr.send(document.documentElement.outerHTML);
     }
+ };
 setInterval(postScreen,WAIT_TIME);
 var video = document.getElementById('video');
 var canvas = document.getElementById('motion');
