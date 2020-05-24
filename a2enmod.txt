@@ -1,0 +1,22 @@
+ 1552  a2enmod cgi
+ 1555  a2enmod cgi
+ 1558  a2enmod cgi
+ 1587  a2enmod perl
+ 1588  a2enmod mod_perl
+ 1589  a2enmod serve-cgi
+ 1590  a2enmod cgi
+ 1592  a2enmod cgi
+ 1594  a2enmod cgi
+ 1613  a2enmod ss
+ 1615  a2enmod gnutls
+ 1616  a2enmod gntls
+ 1617  a2enmod ssl
+ 1619  a2enmod ssl
+ 1700  a2enmod ssl
+ 1701  a2enmod proxy
+ 1702  a2enmod http_proxy
+ 1703  a2enmod proxy_http
+ 1704  a2enmod proxy_balancer
+ 1705  a2enmod lbmethod_byrequests
+ 1992  history |grep a2
+ 1993  history |grep a2 >Work/motioncam/a2enmod.txt
