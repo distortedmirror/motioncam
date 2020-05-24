@@ -1,0 +1,1 @@
+http://localhost:8080/?cameraDirection=front&clear=true&size=128&change=24&viewonly=false&rand=1255

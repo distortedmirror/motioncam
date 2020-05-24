@@ -77,13 +77,20 @@ var videoImage=document.getElementById('videoImage');
 var videoImageTimestamp=document.getElementById('videoImageTimestamp');
 var videoImageX=document.getElementById('videoImageX');
 var numThreshold= document.getElementById('numberThreshold');
+var inputCapSize=document.getElementById('capSize');
 var rangeCap=document.getElementById('rangeCapture');
 var divCapture = document.getElementById('divCapture');
 var capCount=0;
 var titleOpacity=1.0;
 var divTitle=document.getElementById('divTitle');
-var interval=setInterval(function(){divTitle.style.opacity=titleOpacity;titleOpacity-=0.01;if(titleOpacity<=0){clearInterval(interval);}},10);
+      var interval=setInterval(function(){divTitle.style.opacity=titleOpacity;titleOpacity-=0.01;if(titleOpacity<=0){clearInterval(interval);}},10);
 var cameras=[];
+if(queryStringParams(window.location.search)["change"]!=undefined) {
+    numThreshold.value=queryStringParams(window.location.search)["change"];
+}
+if(queryStringParams(window.location.search)["size"]!=undefined) {
+    inputCapSize.value=queryStringParams(window.location.search)["size"];
+}
 navigator.mediaDevices.enumerateDevices().then(function (devices) {
             for(var i = 0; i < devices.length; i ++){
                 var device = devices[i];
