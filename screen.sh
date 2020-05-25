@@ -1,4 +1,4 @@
 #!/bin/bash
-rm -f ./screens/* 2> /dev/null
+cd /usr/lib/cgi-bin
 perl -e 'print "Content-type: text/html\r\n\r\n";'
-echo Cleared
+cat screen.html

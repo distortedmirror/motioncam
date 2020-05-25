@@ -86,10 +86,17 @@ function postClear(){
     if(queryStringParams(window.location.search)["port"]!=undefined) {
 	port=queryStringParams(window.location.search)["port"];
     }
-    document.xhr.open('POST','https://192.168.44.130/clear',true);
-    document.xhr.send(document.documentElement.outerHTML);
+    document.xhr.open('POST','/cgi-bin/clearScreens.sh',true);
+    document.xhr.send("");
+	    capCount=0;
+	    document.getElementById('divCount').innerHTML=capCount;
+	    rangeCap.setAttribute('max',capCount-1);
+	    rangeCap.setAttribute('value',capCount-1);
+	    divCapture.innerHTML='';
+	    localStorage.clear();
 }
 function postScreen(){
+if(capCount==0) {return;}
     document.xhr=new XMLHttpRequest();
     document.xhr.onreadystatechange=function(){
         if(document.xhr.readyState==XMLHttpRequest.DONE){
@@ -100,7 +107,6 @@ function postScreen(){
             }
         }
     };
-
     var svr='localhost';
     if(queryStringParams(window.location.search)["server"]!=undefined) {
 	svr=queryStringParams(window.location.search)["server"];
@@ -109,8 +115,14 @@ function postScreen(){
     if(queryStringParams(window.location.search)["port"]!=undefined) {
 	port=queryStringParams(window.location.search)["port"];
     }
-    document.xhr.open('POST','https://192.168.44.130/post',true);
+    document.xhr.open('POST','/cgi-bin/post.sh',true);
     document.xhr.send(document.documentElement.outerHTML);
+	    capCount=0;
+	    document.getElementById('divCount').innerHTML=capCount;
+	    rangeCap.setAttribute('max',capCount-1);
+	    rangeCap.setAttribute('value',capCount-1);
+	    divCapture.innerHTML='';
+	    localStorage.clear();
 }
 var video = document.getElementById('video');
 var canvas = document.getElementById('motion');
@@ -521,17 +533,7 @@ function capture(payload) {
 	rangeCap.setAttribute('max',capCount-1);
 	rangeCap.setAttribute('value',capCount-1);
 	if(capCount>=POST_CAP_COUNT){
-setTimeout(function(){
 	    postScreen();
-setTimeout(function(){
-	    capCount=0;
-	    document.getElementById('divCount').innerHTML=capCount;
-	    rangeCap.setAttribute('max',capCount-1);
-	    rangeCap.setAttribute('value',capCount-1);
-	    divCapture.innerHTML='';
-	    localStorage.clear();
-},0);
-},0);
 	}
     }
 }
