@@ -1,0 +1,1 @@
+install apache2 ncat perl openssh chromium and others.
