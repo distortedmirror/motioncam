@@ -1,5 +1,18 @@
-echo Connect your clients to the Server via WiFi on Subnet 192.168.43.0/24
-echo Then setup an SSHD on 192.168.43.1:8022 and press enter
-echo A HTTPS port will be forwarded to your local 8443 port.
-read
-ssh -D 8888 -R 127.0.0.1:8443:127.0.0.1:443 u0_a177@192.168.43.1 -p 8022 -N
+echo Connect your clients to the Gateway Server .1 via this script. 
+route |grep -v Kernel
+ip addr | grep inet
+route |grep inet
+uname=u0_a169
+ip=192.168.44.1
+socksport=8888
+remotesocksport=8888
+port=8022
+fromport=443
+toport=8443
+echo Scan
+nping -c 1 127.0.0.1 -tcp -p $fromport
+nping -c 1 $ip
+nping -c 1 $ip -tcp -p $port
+echo "ssh -D 127.0.0.1:$socksport -R 127.0.0.1:$toport:127.0.0.1:$fromport $uname\@$ip -p $port "
+echo Connecting to SSHD on $uname$ip:$port
+ssh -D 127.0.0.1:$socksport -R 127.0.0.1:$toport:127.0.0.1:$fromport $uname\@$ip -p $port 
