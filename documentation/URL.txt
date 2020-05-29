@@ -1,2 +1,4 @@
-http://localhost:8080/?cameraDirection=front&clear=true&size=96&change=55&viewonly=false&torch=off&server=localhost&port=1235&wait=10000&postcount=100&rand=12555
-http://localhost:8080/screen.html?clear=false&viewonly=true&rand=0.597782181915846349
+
+https://localhost/cgi-bin/camera.sh?cameraDirection=front&clear=true&size=96&change=55&viewonly=false&torch=off&server=localhost&port=1235&postcount=10&wait=3000&rand=0.9868477954851962
+
+https://localhost/cgi-bin/screen.sh?clear=false&viewonly=true&rand=0.4822185301914972
