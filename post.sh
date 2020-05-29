@@ -42,8 +42,9 @@
 	 for i in `ls ./screens/*.html 2> /dev/null |sort`; do
 	     #Create underscore delimited Date and Time Labels
 	     export DATETIME=`echo $i|perl -pe 's/\.\/screens\/(..)_(..)_(..)_(..)_(..)_(..)_screen\.html/$1_$2_$3_$4_$5_$6/ig;'`
+	     export DATETIMELABEL=`echo $i|perl -pe 's/\.\/screens\/(..)_(..)_(..)_(..)_(..)_(..)_screen\.html/$1\/$2\/$3 $4:$5:$6/ig;'`
 	     #Create the SELECT OPTIONS for each Screen
-	     echo '<option value="'${DATETIME}'_screen.html?clear=false&viewonly=true&rand='`date +%s`'" title="'$DATETIME'">'$DATETIME'</option>' >>screens.html
+	     echo '<option value="'${DATETIME}'_screen.html?clear=false&viewonly=true&rand='`date +%s`'" title="'$DATETIMELABEL'">'$DATETIMELABEL'</option>' >>screens.html
 	 done
 	 echo '</select>' >> screens.html
 	 #End Creating HTML SELECT of All Generated Screens
