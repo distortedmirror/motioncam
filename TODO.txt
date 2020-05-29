@@ -1,4 +1,3 @@
-mutexes on all server scripts
 play all video
 compress images
 compress posts
