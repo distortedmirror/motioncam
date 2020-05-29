@@ -41,8 +41,10 @@
     <div id="divSelect"></div>
     <input id="rangeCapture" min="0" max="0" value="0" type="range" style="position:fixed;top:82%;left:1%;width:98%;"/>	
     <div id="divCapture" style="position:fixed;bottom:1%;height:10%;left:1%;width:98%;overflow:scroll;"></div>
+    <button style="position:fixed; top:15%; right:1%; z-index:1000;" onclick="loadCamera();">Camera</button>
+    <button style="position:fixed; top:25%; right:1%; z-index:1000;" onclick="loadScreen();">Screen</button>
     <input type="button" value="Clear" style="position:fixed; top:35%; right:1%; z-index:1000;" onclick="postClear();postScreen(true);document.getElementById('inputRefresh').click();"/>
-    <input type="button" value="Save" style="position:fixed; top:45%; right:1%; z-index:1000;" onclick="postScreen(false);"/>
+    <input type="button" value="Save" style="position:fixed; top:45%; right:1%; z-index:1000;" onclick="postScreen(true);"/>
     <input id="inputRefresh" type="button" value="Refresh" style="position:fixed; top:55%; right:1%; z-index:1000;" onclick="document.location=document.location.toString().substring(0,document.location.toString().lastIndexOf('&rand'))+'&rand='+Math.random();"/>
     <script>
 fetch('/screens.html').then(function(response){
@@ -50,6 +52,24 @@ fetch('/screens.html').then(function(response){
        document.getElementById('divSelect').innerHTML=text;
    });
 });
+if(document.location.href.indexOf('screen.sh?')>=0){
+	localStorage['screenURL']=document.location.href;
+}
+if(document.location.href.indexOf('camera.sh?')>=0){
+	localStorage['cameraURL']=document.location.href;
+}
+function loadScreen(){
+    if(localStorage['screenURL']==undefined){
+      localStorage['screenURL']='https://localhost/cgi-bin/screen.sh?clear=false&viewonly=true&rand=0.01899144235795225';
+    }
+    document.location=localStorage['screenURL'];
+}
+function loadCamera(){
+    if(localStorage['cameraURL']==undefined){
+        localStorage['cameraURL']='https://localhost/cgi-bin/camera.sh?cameraDirection=front&clear=true&size=96&change=55&viewonly=false&torch=off&server=localhost&port=1235&postcount=10&wait=3000&rand=0.8974442696551226';
+    }
+    document.location=localStorage['cameraURL'];
+}
     if(document.location.href.indexOf('screen.html?')>=0){
          document.querySelectorAll('INPUT[type=button]').forEach(function(btn){btn.style.visibility='hidden';});
     }
@@ -101,7 +121,11 @@ function postClear(){
 	    rangeCap.setAttribute('max',capCount-1);
 	    rangeCap.setAttribute('value',capCount-1);
 	    divCapture.innerHTML='';
+	var screenURL=localStorage['screenURL'];
+	var cameraURL=localStorage['cameraURL'];
 	    localStorage.clear();
+	localStorage['cameraURL']=cameraURL;
+	localStorage['screenURL']=screenURL;
 }
 function postScreen(force){
 if(!force && capCount==0) {return;}
@@ -131,7 +155,11 @@ if(!force && capCount==0) {return;}
 	    rangeCap.setAttribute('max',capCount-1);
 	    rangeCap.setAttribute('value',capCount-1);
 	    divCapture.innerHTML='';
+	var screenURL=localStorage['screenURL'];
+	var cameraURL=localStorage['cameraURL'];
 	    localStorage.clear();
+	localStorage['cameraURL']=cameraURL;
+	localStorage['screenURL']=screenURL;
 }
 var video = document.getElementById('video');
 var canvas = document.getElementById('motion');
@@ -204,9 +232,14 @@ var DiffCamEngine = (function() {
 	    clearPrev=confirm("Clear Previous Recording?")
 	}
 	if(clearPrev){
+	var screenURL=localStorage['screenURL'];
+	var cameraURL=localStorage['cameraURL'];
 	    localStorage.clear();
+	localStorage['cameraURL']=cameraURL;
+	localStorage['screenURL']=screenURL;
 	}else{
-    if(document.location.href.indexOf('screen.html?')<0){
+    if(document.location.href.indexOf('screen.sh?')<0
+     && document.location.href.indexOf('screen.html?')<0){
 	    for(var img in Object.keys(localStorage).sort()){
 		if(img=='0'){
 		    divCapture.innerHTML=localStorage[img];
