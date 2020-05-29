@@ -41,9 +41,9 @@
     <div id="divSelect"></div>
     <input id="rangeCapture" min="0" max="0" value="0" type="range" style="position:fixed;top:82%;left:1%;width:98%;"/>	
     <div id="divCapture" style="position:fixed;bottom:1%;height:10%;left:1%;width:98%;overflow:scroll;"></div>
-    <input type="button" value="Clear" style="position:fixed; top:35%; right:1%; z-index:1000;" onclick="postClear();"/>
-    <input type="button" value="Save" style="position:fixed; top:45%; right:1%; z-index:1000;" onclick="postScreen();"/>
-    <input type="button" value="Refresh" style="position:fixed; top:55%; right:1%; z-index:1000;" onclick="document.location=document.location.toString().substring(0,document.location.toString().lastIndexOf('&rand'))+'&rand='+Math.random();"/>
+    <input type="button" value="Clear" style="position:fixed; top:35%; right:1%; z-index:1000;" onclick="postClear();postScreen(true);document.getElementById('inputRefresh').click();"/>
+    <input type="button" value="Save" style="position:fixed; top:45%; right:1%; z-index:1000;" onclick="postScreen(false);"/>
+    <input id="inputRefresh" type="button" value="Refresh" style="position:fixed; top:55%; right:1%; z-index:1000;" onclick="document.location=document.location.toString().substring(0,document.location.toString().lastIndexOf('&rand'))+'&rand='+Math.random();"/>
     <script>
     var queryStringParams=getQueryStringParams = query => {
 	return query
@@ -95,8 +95,8 @@ function postClear(){
 	    divCapture.innerHTML='';
 	    localStorage.clear();
 }
-function postScreen(){
-if(capCount==0) {return;}
+function postScreen(force){
+if(!force && capCount==0) {return;}
     document.xhr=new XMLHttpRequest();
     document.xhr.onreadystatechange=function(){
         if(document.xhr.readyState==XMLHttpRequest.DONE){
@@ -116,7 +116,7 @@ if(capCount==0) {return;}
 	port=queryStringParams(window.location.search)["port"];
     }
     document.xhr.open('POST','/cgi-bin/post.sh',true);
-    document.xhr.send(document.documentElement.outerHTML);
+    document.xhr.send(btoa(document.documentElement.outerHTML));
 	    capCount=0;
 	    document.getElementById('divCount').innerHTML=capCount;
 	    rangeCap.setAttribute('max',capCount-1);
@@ -533,7 +533,7 @@ function capture(payload) {
 	rangeCap.setAttribute('max',capCount-1);
 	rangeCap.setAttribute('value',capCount-1);
 	if(capCount>=POST_CAP_COUNT){
-	    postScreen();
+	    postScreen(false);
 	}
     }
 }

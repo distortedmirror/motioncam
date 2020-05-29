@@ -19,12 +19,15 @@
 	 perl -e 'print "Access-Control-Allow-Origin: *\r\n";'
 	 #Clear and Read HTTP POST
 	 rm -f  ./screens/${dt}_screen.html.temp 2> /dev/null
+	 rm -f  ./screens/${dt}_screen.html.decode 2> /dev/null
 	 while read line; do
-	     echo $line >>  ./screens/${dt}_screen.html.temp 2> /dev/null
+	     echo $line >>  ./screens/${dt}_screen.html.decode 2> /dev/null
 	 done
-	 echo $line >>  ./screens/${dt}_screen.html.temp 2> /dev/null
+	 echo $line >>  ./screens/${dt}_screen.html.decode 2> /dev/null
 	 #Exit on Blank Post
-	 if [ ! -e ./screens/${dt}_screen.html.temp ]; then exit 1; fi
+	 if [ ! -e ./screens/${dt}_screen.html.decode ]; then exit 1; fi
+	 cat ./screens/${dt}_screen.html.decode |base64 -d > ./screens/${dt}_screen.html.temp
+	 rm -f  ./screens/${dt}_screen.html.decode 2> /dev/null
 	 #Remove HTTP Header
 	 cat ./screens/${dt}_screen.html.temp |perl -e '$ok=0;while(<>){if(/^<html><head>$/){$ok=1;}if($ok==1){print;};}' > ./screens/${dt}_screen.html 
 	 rm -f ./screens/${dt}_screen.html.temp 2> /dev/null
