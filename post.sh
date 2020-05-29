@@ -63,5 +63,7 @@
 	 #Remove the pre-replaced HTML File
 	 #Remove SELECT HTML
 #	 rm -f ./screens.html 2> /dev/null	
+chmod a+rw screens.html 2> /dev/null
+chmod a+rw screen.html 2> /dev/null
      fi
  ) ) 8> /var/lock/lock8
