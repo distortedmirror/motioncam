@@ -47,11 +47,32 @@
     <input type="button" value="Save" style="position:fixed; top:45%; right:1%; z-index:1000;" onclick="postScreen(true);"/>
     <input id="inputRefresh" type="button" value="Refresh" style="position:fixed; top:55%; right:1%; z-index:1000;" onclick="document.location=document.location.toString().substring(0,document.location.toString().lastIndexOf('&rand'))+'&rand='+Math.random();"/>
     <script>
+var video = document.getElementById('video');
+var canvas = document.getElementById('motion');
+var score = document.getElementById('score');
+var videoImage=document.getElementById('videoImage');
+var videoImageTimestamp=document.getElementById('videoImageTimestamp');
+var videoImageX=document.getElementById('videoImageX');
+var numThreshold= document.getElementById('numberThreshold');
+var inputCapSize=document.getElementById('capSize');
+var rangeCap=document.getElementById('rangeCapture');
+var divCapture = document.getElementById('divCapture');
+var capCount=0;
+var titleOpacity=1.0;
+var divTitle=document.getElementById('divTitle');
+var interval=setInterval(function(){divTitle.style.opacity=titleOpacity;titleOpacity-=0.01;if(titleOpacity<=0){clearInterval(interval);}},10);
+var cameras=[];
 fetch('/screens.html').then(function(response){
    return response.text().then(function(text){
        document.getElementById('divSelect').innerHTML=text;
    });
 });
+setTimeout(function(){
+if(document.location.href.indexOf('screen.sh?')>=0 ||
+document.location.href.indexOf('screen.html?')>=0){
+	rangeCap.oninput(rangeCap);	
+}
+},0);
 if(document.location.href.indexOf('screen.sh?')>=0){
 	localStorage['screenURL']=document.location.href;
 }
@@ -161,21 +182,6 @@ if(!force && capCount==0) {return;}
 	localStorage['cameraURL']=cameraURL;
 	localStorage['screenURL']=screenURL;
 }
-var video = document.getElementById('video');
-var canvas = document.getElementById('motion');
-var score = document.getElementById('score');
-var videoImage=document.getElementById('videoImage');
-var videoImageTimestamp=document.getElementById('videoImageTimestamp');
-var videoImageX=document.getElementById('videoImageX');
-var numThreshold= document.getElementById('numberThreshold');
-var inputCapSize=document.getElementById('capSize');
-var rangeCap=document.getElementById('rangeCapture');
-var divCapture = document.getElementById('divCapture');
-var capCount=0;
-var titleOpacity=1.0;
-var divTitle=document.getElementById('divTitle');
-var interval=setInterval(function(){divTitle.style.opacity=titleOpacity;titleOpacity-=0.01;if(titleOpacity<=0){clearInterval(interval);}},10);
-var cameras=[];
 if(queryStringParams(window.location.search)["change"]!=undefined) {
     numThreshold.value=queryStringParams(window.location.search)["change"];
 }
@@ -220,6 +226,7 @@ var DiffCamEngine = (function() {
 	if (!options) {
 	    throw 'No options object provided';
 	}
+	    rangeCap.setAttribute('oninput','videoImageX.style.display="block";videoImageTimestamp.style.display="block";videoImage.src=divCapture.children[this.value].src;videoImageTimestamp.innerHTML=divCapture.children[this.value].getAttribute("title");videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;border:4px gold outset;");videoImage.setAttribute("onclick",\'videoImageX.style.display=\"none\";videoImageTimestamp.style.display=\"none\";this.style.display=\"none\";\');');
 	var clearPrev=false;
 	if(queryStringParams(window.location.search)["clear"]!=undefined) {
 	    var qsClear=queryStringParams(window.location.search)["clear"];
@@ -251,8 +258,6 @@ var DiffCamEngine = (function() {
 	    rangeCap.setAttribute('max',capCount-1);
 	    rangeCap.setAttribute('value',capCount-1);
      }
-	    rangeCap.setAttribute('oninput','videoImageX.style.display="block";videoImageTimestamp.style.display="block";videoImage.src=divCapture.children[this.value].src;videoImageTimestamp.innerHTML=divCapture.children[this.value].getAttribute("title");videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;border:4px gold outset;");videoImage.setAttribute("onclick","videoImageX.style.display=&quot;none&quot;;videoImageTimestamp.style.display=&quot;none&quot;;this.style.display=&quot;none&quot;;");');
-	    rangeCap.setAttribute('oninput','videoImageX.style.display="block";videoImageTimestamp.style.display="block";videoImage.src=divCapture.children[this.value].src;videoImageTimestamp.innerHTML=divCapture.children[this.value].getAttribute("title");videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;border:4px gold outset;");videoImage.setAttribute("onclick","videoImageX.style.display=&quot;none&quot;;videoImageTimestamp.style.display=&quot;none&quot;;this.style.display=&quot;none&quot;;");');
 	}
 	// incoming options with defaults
 	video = options.video || document.createElement('video');
@@ -565,8 +570,9 @@ function capture(payload) {
 	videoImageTimestamp.innerHTML=displayDate;
 	img.setAttribute('title',displayDate);
 	img.setAttribute('style','position:relative;height:45%;width:auto;margin:1px;');
-	rangeCap.setAttribute('oninput','videoImageX.style.display="block";videoImageTimestamp.style.display="block";videoImage.src=divCapture.children[this.value].src;videoImageTimestamp.innerHTML=divCapture.children[this.value].getAttribute("title");videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;border:4px gold outset;");videoImage.setAttribute("onclick","videoImageX.style.display=&quot;none&quot;;videoImageTimestamp.style.display=&quot;none&quot;;this.style.display=&quot;none&quot;;");');
-	img.setAttribute('onclick','videoImageX.style.display="block";videoImageTimestamp.style.display="block";videoImage.src=this.src;videoImageTimestamp.innerHTML=this.getAttribute("title");videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;border:4px gold outset;");videoImage.setAttribute("onclick","videoImageX.style.display=&quot;none&quot;;videoImageTimestamp.style.display=&quot;none&quot;;this.style.display=&quot;none&quot;;");');
+	rangeCap.setAttribute('oninput','videoImageX.style.display="block";videoImageTimestamp.style.display="block";videoImage.src=divCapture.children[this.value].src;videoImageTimestamp.innerHTML=divCapture.children[this.value].getAttribute("title");videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;border:4px gold outset;");videoImage.setAttribute("onclick",\'videoImageX.style.display=\"none\";videoImageTimestamp.style.display=\"none\";this.style.display=\"none\";\');videoImage.setAttribute("onmouseenter",\'if(document.location.href.indexOf(\"camera.sh?\")<0){this.onclick(this);}\');');
+	img.setAttribute('onclick','videoImageX.style.display="block";videoImageTimestamp.style.display="block";videoImage.src=this.src;videoImageTimestamp.innerHTML=this.getAttribute("title");videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;border:4px gold outset;");videoImage.setAttribute("onclick",\'videoImageX.style.display=\"none\";videoImageTimestamp.style.display=\"none\";this.style.display=\"none\";\');');
+	img.setAttribute('onmouseenter','videoImageX.style.display="block";videoImageTimestamp.style.display="block";videoImage.src=this.src;videoImageTimestamp.innerHTML=this.getAttribute("title");videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;border:4px gold outset;");videoImage.setAttribute("onclick",\'videoImageX.style.display=\"none\";videoImageTimestamp.style.display=\"none\";this.style.display=\"none\";\');');
 	if(divCapture.childNodes.length==0){	
 	    divCapture.append(img);
 	}else{
