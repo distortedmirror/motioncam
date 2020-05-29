@@ -62,9 +62,22 @@ var titleOpacity=1.0;
 var divTitle=document.getElementById('divTitle');
 var interval=setInterval(function(){divTitle.style.opacity=titleOpacity;titleOpacity-=0.01;if(titleOpacity<=0){clearInterval(interval);}},10);
 var cameras=[];
+var divsel=document.getElementById('divSelect');
 fetch('/screens.html').then(function(response){
    return response.text().then(function(text){
-       document.getElementById('divSelect').innerHTML=text;
+       divsel=document.getElementById('divSelect')
+	divsel.innerHTML=text;
+if(document.location.href.indexOf('screen.html?')>=0){
+setTimeout(function(){
+var select=divsel.querySelector('SELECT');
+       for(var i=0;i<select.options.length;++i){
+          if(document.location.href.indexOf(select.options[i].value)>=0){
+                 select.options[i].innerHTML=
+                 "["+select.options[i].innerHTML+"]";
+          }
+       }
+},0);
+  }
    });
 });
 setTimeout(function(){
@@ -154,7 +167,7 @@ if(!force && capCount==0) {return;}
     xhr.onreadystatechange=function(){
         if(xhr.readyState==XMLHttpRequest.DONE){
     if(xhr.status==200){
-    document.getElementById('divSelect').innerHTML=atob(xhr.responseText)
+	divsel.innerHTML=atob(xhr.responseText)
                 console.debug("store.pl: cacheCallResults success");
             }else{
                 console.debug('store.pl: Error in cacheCallResults, are you online?');

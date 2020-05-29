@@ -1,0 +1,7 @@
+mutexes on all server scripts
+play all video
+compress images
+compress posts
+compress gets
+get running on android apache
+mirror server
