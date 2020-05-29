@@ -50,17 +50,17 @@
 	 #Turn the SELECT into a flat string with no enters or newlines for easy replacement in main HTML file.
 	 export SELECTHTML="`cat screens.html | perl -pe 's/[\r\n]//ig;'`"
 	 #Send the length and content to the client
-	 perl -e 'print "Content-Length: '`echo $SELECTHTML|wc -c`'\r\n\r\n";'
-	 echo $SELECTHTML
+	 perl -e 'print "Content-Length: '`echo $SELECTHTML|base64|wc -c`'\r\n\r\n";'
+	 echo $SELECTHTML|base64
 	 #Replace SELECT HTML into main HTML file that is timestamped
 	 cp ./screens/${dt}_screen.html ./screens/${dt}_screen.html.temp 2> /dev/null
-	 cat ./screens/${dt}_screen.html.temp | perl -pe 's/<div id="divSelect"><\/div>/$ENV{'\''SELECTHTML'\''}/ig;' > ./screens/${dt}_screen.html
+	 cat ./screens/${dt}_screen.html.temp | perl -pe 's/<div id="divSelect"><\/div>/<div id="divSelect">$ENV{'\''SELECTHTML'\''}<\/div>/ig;' > ./screens/${dt}_screen.html
 	 #Copy the previous timestamped HTML to a main screen HTML
 	 rm -f ./screen.html 2> /dev/null
 	 rm -f ./screens/${dt}_screen.html.temp 2> /dev/null
 	 cp -f ./screens/${dt}_screen.html ./screen.html
 	 #Remove the pre-replaced HTML File
 	 #Remove SELECT HTML
-	 rm -f ./screens.html 2> /dev/null	
+#	 rm -f ./screens.html 2> /dev/null	
      fi
  ) ) 8> /var/lock/lock8

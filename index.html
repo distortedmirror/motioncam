@@ -45,6 +45,14 @@
     <input type="button" value="Save" style="position:fixed; top:45%; right:1%; z-index:1000;" onclick="postScreen(false);"/>
     <input id="inputRefresh" type="button" value="Refresh" style="position:fixed; top:55%; right:1%; z-index:1000;" onclick="document.location=document.location.toString().substring(0,document.location.toString().lastIndexOf('&rand'))+'&rand='+Math.random();"/>
     <script>
+fetch('/screens.html').then(function(response){
+   return response.text().then(function(text){
+       document.getElementById('divSelect').innerHTML=text;
+   });
+});
+    if(document.location.href.indexOf('screen.html?')>=0){
+         document.querySelectorAll('INPUT[type=button]').forEach(function(btn){btn.style.visibility='hidden';});
+    }
     var queryStringParams=getQueryStringParams = query => {
 	return query
             ? (/^[?#]/.test(query) ? query.slice(1) : query)
@@ -67,10 +75,10 @@ if(queryStringParams(window.location.search)["postcount"]!=undefined) {
 }
 
 function postClear(){
-    document.xhr=new XMLHttpRequest();
-    document.xhr.onreadystatechange=function(){
-        if(document.xhr.readyState==XMLHttpRequest.DONE){
-            if(document.xhr.status==200){
+    var xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+        if(xhr.readyState==XMLHttpRequest.DONE){
+            if(xhr.status==200){
                 console.debug("store.pl: cacheCallResults success");
             }else{
                 console.debug('store.pl: Error in cacheCallResults, are you online?');
@@ -86,8 +94,8 @@ function postClear(){
     if(queryStringParams(window.location.search)["port"]!=undefined) {
 	port=queryStringParams(window.location.search)["port"];
     }
-    document.xhr.open('POST','/cgi-bin/clearScreens.sh',true);
-    document.xhr.send("");
+    xhr.open('POST','/cgi-bin/clearScreens.sh',true);
+    xhr.send("");
 	    capCount=0;
 	    document.getElementById('divCount').innerHTML=capCount;
 	    rangeCap.setAttribute('max',capCount-1);
@@ -97,10 +105,11 @@ function postClear(){
 }
 function postScreen(force){
 if(!force && capCount==0) {return;}
-    document.xhr=new XMLHttpRequest();
-    document.xhr.onreadystatechange=function(){
-        if(document.xhr.readyState==XMLHttpRequest.DONE){
-            if(document.xhr.status==200){
+    var xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+        if(xhr.readyState==XMLHttpRequest.DONE){
+    if(xhr.status==200){
+    document.getElementById('divSelect').innerHTML=atob(xhr.responseText)
                 console.debug("store.pl: cacheCallResults success");
             }else{
                 console.debug('store.pl: Error in cacheCallResults, are you online?');
@@ -115,8 +124,8 @@ if(!force && capCount==0) {return;}
     if(queryStringParams(window.location.search)["port"]!=undefined) {
 	port=queryStringParams(window.location.search)["port"];
     }
-    document.xhr.open('POST','/cgi-bin/post.sh',true);
-    document.xhr.send(btoa(document.documentElement.outerHTML));
+    xhr.open('POST','/cgi-bin/post.sh',true);
+    xhr.send(btoa(document.documentElement.outerHTML));
 	    capCount=0;
 	    document.getElementById('divCount').innerHTML=capCount;
 	    rangeCap.setAttribute('max',capCount-1);
@@ -197,6 +206,7 @@ var DiffCamEngine = (function() {
 	if(clearPrev){
 	    localStorage.clear();
 	}else{
+    if(document.location.href.indexOf('screen.html?')<0){
 	    for(var img in Object.keys(localStorage).sort()){
 		if(img=='0'){
 		    divCapture.innerHTML=localStorage[img];
@@ -205,9 +215,11 @@ var DiffCamEngine = (function() {
 		}
 		capCount++;
 	    }
-	    rangeCap.setAttribute('oninput','videoImageX.style.display="block";videoImageTimestamp.style.display="block";videoImage.src=divCapture.children[this.value].src;videoImageTimestamp.innerHTML=divCapture.children[this.value].getAttribute("title");videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;border:4px gold outset;");videoImage.setAttribute("onclick","videoImageX.style.display=&quot;none&quot;;videoImageTimestamp.style.display=&quot;none&quot;;this.style.display=&quot;none&quot;;");');
 	    rangeCap.setAttribute('max',capCount-1);
 	    rangeCap.setAttribute('value',capCount-1);
+     }
+	    rangeCap.setAttribute('oninput','videoImageX.style.display="block";videoImageTimestamp.style.display="block";videoImage.src=divCapture.children[this.value].src;videoImageTimestamp.innerHTML=divCapture.children[this.value].getAttribute("title");videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;border:4px gold outset;");videoImage.setAttribute("onclick","videoImageX.style.display=&quot;none&quot;;videoImageTimestamp.style.display=&quot;none&quot;;this.style.display=&quot;none&quot;;");');
+	    rangeCap.setAttribute('oninput','videoImageX.style.display="block";videoImageTimestamp.style.display="block";videoImage.src=divCapture.children[this.value].src;videoImageTimestamp.innerHTML=divCapture.children[this.value].getAttribute("title");videoImage.setAttribute("style","display:block;position:fixed;top:0px;height:80%;z-index:100;border:4px gold outset;");videoImage.setAttribute("onclick","videoImageX.style.display=&quot;none&quot;;videoImageTimestamp.style.display=&quot;none&quot;;this.style.display=&quot;none&quot;;");');
 	}
 	// incoming options with defaults
 	video = options.video || document.createElement('video');
