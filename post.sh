@@ -1,7 +1,7 @@
 #!/bin/bash
 ((flock --timeout 60 8 || exit 1 ) &&  (
      if [ "1" = "1" ]; then	   
-	 cd /usr/lib/cgi-bin
+	 cd /var/www/html
 	 set -o pipefail  # trace ERR through pipes
 	 set -o errtrace  # trace ERR through 'time command' and other functions
 	 function error() {
